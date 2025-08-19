@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "PIO Build",
+      "type": "shell",
+      "command": "platformio",
+      "args": ["run"],
+      "group": "build",
+      "problemMatcher": ["$platformio"],
+      "presentation": {"reveal": "always"}
+    },
+    {
+      "label": "PIO Upload",
+      "type": "shell",
+      "command": "platformio",
+      "args": ["run", "--target", "upload"],
+      "group": "none",
+      "problemMatcher": ["$platformio"],
+      "presentation": {"reveal": "always"}
+    },
+    {
+      "label": "PIO Monitor",
+      "type": "shell",
+      "command": "platformio",
+      "args": ["device", "monitor", "-b", "115200"],
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+ - [x] Clarify Project Requirements (ESP32-S3 quadrature encoder reader for Omron E6B2-CWZ6C on GPIO16/17/18 with high-rate stable velocity)
+ - [x] Scaffold the Project (Added platformio.ini, src/main.cpp, README.md)
+ - [x] Customize the Project (Interrupt-driven quadrature decode + EMA speed, edge-blended velocity)
+ - [x] Install Required Extensions (PlatformIO IDE optional - skipped, user may install manually)
+ - [x] Compile the Project (Build succeeded with PlatformIO)
+ - [x] Create and Run Task (Added .vscode/tasks.json for build/upload/monitor)
+ - [x] Launch the Project (User to run PIO Upload + Monitor tasks)
+ - [x] Ensure Documentation is Complete (README includes hardware, build, usage)
