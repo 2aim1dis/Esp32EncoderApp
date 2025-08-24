@@ -6,6 +6,7 @@
 // ====== COMMAND PROCESSING ======
 void processSerialCommands();
 void handleTareCommand();
+void handleTareCommand(const String& cmd);
 void handleCalCommand(const String& cmd);
 void handleRawCommand();
 void handleScaleCommand();

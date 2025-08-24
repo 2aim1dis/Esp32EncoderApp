@@ -11,9 +11,15 @@
 #define EMA_ALPHA    0.30f     // 0..1 (higher = more responsive, lower = smoother)
 
 // ====== LOAD CELL / HX711 CONFIG (LP7145C 300kg) ======
-#define HX711_DOUT_PIN   40   // Data pin (DOUT)
-#define HX711_SCK_PIN    41   // Clock pin (SCK)
+// LoadCell 1
+#define HX711_DOUT_PIN_1   40   // Data pin (DOUT) for LoadCell 1
+#define HX711_SCK_PIN_1    41   // Clock pin (SCK) for LoadCell 1
+// LoadCell 2
+#define HX711_DOUT_PIN_2   42   // Data pin (DOUT) for LoadCell 2
+#define HX711_SCK_PIN_2    43   // Clock pin (SCK) for LoadCell 2
+// Common settings
 #define HX711_READ_SAMPLES 8  // Oversampling per report window
 #define FORCE_IIR_ALPHA  0.15f // Low-pass for force (0..1)
+#define NUM_LOADCELLS    2     // Number of load cells
 
 #endif // CONFIG_H

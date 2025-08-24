@@ -4,8 +4,9 @@
 void printSystemStatus() {
   Serial.println(F("ESP32-S3 Quadrature Encoder Start"));
   Serial.printf("PPR=%d, Sample Rate=%dms\n", ENC_PPR, SPEED_SAMPLE_US / 1000);
-  Serial.println(F("Commands: TARE, CAL <kg>, RAW, SCALE"));
-  Serial.println(F("Output Format: Pos=<position> cps=<counts/sec> rpm=<rpm> force=<kg> [Z]"));
+  Serial.printf("LoadCells=%d\n", NUM_LOADCELLS);
+  Serial.println(F("Commands: TARE [1|2], CAL <cellIndex> <kg>, RAW, SCALE"));
+  Serial.println(F("Output Format: Pos=<position> cps=<counts/sec> rpm=<rpm> force1=<kg> force2=<kg> [Z]"));
   Serial.println();
 }
 

@@ -25,8 +25,9 @@ void setup() {
 void loop() {
   uint32_t currentTime = micros_fast();
   
-  // Update load cell readings
-  updateLoadCell(currentTime);
+  // Update load cell readings for both loadcells
+  updateLoadCell(0, currentTime); // LoadCell 1
+  updateLoadCell(1, currentTime); // LoadCell 2
   
   // Update encoder speed calculations
   updateEncoderSpeed(currentTime);
@@ -41,7 +42,8 @@ void loop() {
     int64_t position = getPosition();
     float rpm = getRPM();
     float countsPerSec = emaCountsPerSec;
-    float forceKg = getForceKg();
+    float forceKg1 = getForceKg(0); // LoadCell 1
+    float forceKg2 = getForceKg(1); // LoadCell 2
     
     // Check for index pulse
     bool indexSeen;
@@ -52,7 +54,8 @@ void loop() {
     
     // Print combined output
     printEncoderData(position, rpm, countsPerSec, indexSeen);
-    printForceData(forceKg);
+    printForceData(forceKg1); // LoadCell 1
+    printForceData(forceKg2); // LoadCell 2
     
     lastOutput = currentTime;
   }
