@@ -8,7 +8,7 @@ int32_t hx711Offset = 0;               // Tare offset
 bool hx711Tared = false;
 float filteredForceKg = 0.0f;
 int32_t lastHxRaw = 0;                 // last averaged raw
-uint32_t lastForceUpdateMs = 0;
+uint32_t lastForceUpdateUs = 0;
 
 // Static variables for sampling state
 static int32_t hxAccum = 0;
@@ -26,7 +26,7 @@ void initLoadCell() {
   delay(100);
 }
 
-void updateLoadCell() {
+void updateLoadCell(uint32_t currentTime) {
   // ---- Non-blocking HX711 sampling (collect up to HX711_READ_SAMPLES each loop batch) ----
   // HX711 data ready when DOUT LOW.
   if (digitalRead(HX711_DOUT_PIN) == LOW) {
@@ -54,7 +54,7 @@ void updateLoadCell() {
   }
 
   // Periodically update filtered force (after collecting samples or if timeout)
-  if ((hxCount >= HX711_READ_SAMPLES) || (millis() - lastForceUpdateMs > 100)) {
+  if ((hxCount >= HX711_READ_SAMPLES) || ((uint32_t)(currentTime - lastForceUpdateUs) > 100000)) { // 100ms in microseconds
     if (hxCount > 0) {
       int32_t avgRaw = hxAccum / hxCount;
       lastHxRaw = avgRaw;
@@ -69,7 +69,7 @@ void updateLoadCell() {
       
       // IIR filter
       filteredForceKg = FORCE_IIR_ALPHA * instKg + (1.0f - FORCE_IIR_ALPHA) * filteredForceKg;
-      lastForceUpdateMs = millis();
+      lastForceUpdateUs = currentTime;
     }
     hxAccum = 0;
     hxCount = 0;

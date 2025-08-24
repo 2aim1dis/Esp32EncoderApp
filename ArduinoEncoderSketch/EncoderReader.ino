@@ -26,7 +26,7 @@ void loop() {
   uint32_t currentTime = micros_fast();
   
   // Update load cell readings
-  updateLoadCell();
+  updateLoadCell(currentTime);
   
   // Update encoder speed calculations
   updateEncoderSpeed(currentTime);

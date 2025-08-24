@@ -10,11 +10,11 @@ extern int32_t hx711Offset;
 extern bool hx711Tared;
 extern float filteredForceKg;
 extern int32_t lastHxRaw;
-extern uint32_t lastForceUpdateMs;
+extern uint32_t lastForceUpdateUs;
 
 // ====== LOAD CELL FUNCTIONS ======
 void initLoadCell();
-void updateLoadCell();
+void updateLoadCell(uint32_t currentTime);
 void tareLoadCell();
 void calibrateLoadCell(float knownWeightKg);
 float getForceKg();
