@@ -1,5 +1,6 @@
 #include "commands.h"
 #include "loadcell.h"
+#include "encoder.h"
 
 void processSerialCommands() {
   if (Serial.available()) {
@@ -14,8 +15,10 @@ void processSerialCommands() {
       handleRawCommand();
     } else if (cmd.equalsIgnoreCase("SCALE")) {
       handleScaleCommand();
+    } else if (cmd.equalsIgnoreCase("ZERO")) {
+      handleZeroCommand();
     } else if (cmd.length() > 0) {
-      Serial.println(F("Unknown command. Available: TARE, CAL <kg>, RAW, SCALE"));
+      Serial.println(F("Unknown command. Available: TARE, CAL <kg>, RAW, SCALE, ZERO"));
     }
   }
 }
@@ -47,4 +50,9 @@ void handleRawCommand() {
 void handleScaleCommand() {
   Serial.print(F("SCALE="));
   Serial.println(getScaleFactor(), 6);
+}
+
+void handleZeroCommand() {
+  resetPosition();
+  Serial.println(F("Encoder position reset to zero"));
 }

@@ -9,5 +9,6 @@ void handleTareCommand();
 void handleCalCommand(const String& cmd);
 void handleRawCommand();
 void handleScaleCommand();
+void handleZeroCommand();
 
 #endif // COMMANDS_H
