@@ -6,7 +6,6 @@
 #include <Arduino.h>
 #include "config.h"
 #include "encoder.h"
-#include "loadcell.h"
 #include "commands.h"
 #include "display.h"
 
@@ -19,14 +18,10 @@ void setup() {
   
   // Initialize subsystems
   initEncoder();
-  initLoadCell();
 }
 
 void loop() {
   uint32_t currentTime = micros_fast();
-  
-  // Update load cell readings
-  updateLoadCell(currentTime);
   
   // Update encoder speed calculations
   updateEncoderSpeed(currentTime);
@@ -41,7 +36,6 @@ void loop() {
     int64_t position = getPosition();
     float rpm = getRPM();
     float countsPerSec = emaCountsPerSec;
-    float forceKg = getForceKg();
     
     // Check for index pulse
     bool indexSeen;
@@ -50,9 +44,8 @@ void loop() {
     indexFlag = false;
     interrupts();
     
-    // Print combined output
+    // Print encoder data
     printEncoderData(position, rpm, countsPerSec, indexSeen);
-    printForceData(forceKg);
     
     lastOutput = currentTime;
   }

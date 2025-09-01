@@ -20,8 +20,8 @@ void printSystemStatus() {
   Serial.printf("Glitch Filter: %d microseconds\n", MIN_EDGE_INTERVAL_US);
   Serial.printf("Velocity Timeout: %d ms\n", VELOCITY_TIMEOUT_US / 1000);
   
-  Serial.println(F("Commands: TARE, CAL <kg>, RAW, SCALE, ZERO"));
-  Serial.println(F("Output Format: Pos=<position> cps=<counts/sec> rpm=<rpm> force=<kg> [Z]"));
+  Serial.println(F("Commands: ZERO"));
+  Serial.println(F("Output Format: Pos=<position> cps=<counts/sec> rpm=<rpm> [Z]"));
   Serial.println();
 }
 
@@ -31,10 +31,5 @@ void printEncoderData(int64_t position, float rpm, float countsPerSec, bool inde
   if (indexSeen) {
     Serial.print(" Z");
   }
-}
-
-void printForceData(float forceKg) {
-  Serial.printf(" force=%.3fkg\n", forceKg);
-  // Optional separate force line for GUI parsers:
-  Serial.printf("Force=%.3fkg\n", forceKg);
+  Serial.println();
 }

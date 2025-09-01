@@ -16,10 +16,4 @@
 #define VELOCITY_TIMEOUT_US  500000 // 500ms - zero velocity if no edges
 #define ADAPTIVE_BLENDING 1    // 1 = adaptive window/edge blending, 0 = fixed 50/50
 
-// ====== LOAD CELL / HX711 CONFIG (LP7145C 300kg) ======
-#define HX711_DOUT_PIN   40   // Data pin (DOUT)
-#define HX711_SCK_PIN    41   // Clock pin (SCK)
-#define HX711_READ_SAMPLES 8  // Oversampling per report window
-#define FORCE_IIR_ALPHA  0.15f // Low-pass for force (0..1)
-
 #endif // CONFIG_H
