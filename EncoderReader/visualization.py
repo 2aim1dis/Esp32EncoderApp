@@ -94,7 +94,7 @@ class DataTable:
         self.tree.heading("CPS", text="CPS")
         self.tree.heading("RPM", text="RPM")
         
-        self.tree.column("Time (ms)", width=100, anchor="center")
+        self.tree.column("Time (ms)", width=120, anchor="center")  # Αύξηση από 100 σε 120
         self.tree.column("Pos", width=80, anchor="center")
         self.tree.column("CPS", width=80, anchor="center")
         self.tree.column("RPM", width=80, anchor="center")
@@ -120,7 +120,7 @@ class DataTable:
         # Add new rows (most recent first)
         for sample in reversed(recent_samples):
             self.tree.insert("", 0, values=(
-                f"{sample.time_ms:.1f}",
+                f"{sample.time_ms:.0f}",  # Χωρίς δεκαδικά - αρκούν τα ακέραια ms
                 sample.pos if sample.pos else "",
                 sample.cps if sample.cps else "",
                 sample.rpm if sample.rpm else ""

@@ -191,7 +191,7 @@ class EncoderGUI:
             with self.mutex:
                 data = [
                     {
-                        "Time (ms)": f"{sample.time_ms:.1f}",
+                        "Time (ms)": f"{sample.time_ms:.3f}",  # Αλλάζω από .1f σε .3f
                         "Pos": sample.pos if sample.pos else "",
                         "CPS": sample.cps if sample.cps else "",
                         "RPM": sample.rpm if sample.rpm else ""
@@ -230,10 +230,10 @@ class EncoderGUI:
                     self.plot.update_plot(self.buffer)
             
             # Schedule next update
-            self.root.after(100, update_displays)  # 100ms refresh rate
+            self.root.after(10, update_displays)  # 10ms refresh rate (100 Hz)
         
         # Start periodic updates
-        self.root.after(100, update_displays)
+        self.root.after(10, update_displays)
     
     def run(self):
         """Start the GUI application."""
