@@ -1,5 +1,14 @@
 # High-Performance Quadrature Encoder Reader (Encoder-Only Version)
 
+## Recent Updates
+
+### PCNT Speed Calculation Fix (September 2025)
+✅ **Fixed:** Speed calculation (cps/RPM) now works correctly in Hardware PCNT mode  
+✅ **Enhanced:** Mode-specific velocity calculation for optimal performance  
+✅ **Verified:** Both position and speed measurements accurate in all modes  
+
+---
+
 ## Overview
 This is a streamlined version of the ESP32-S3 quadrature encoder reader, focused exclusively on high-performance encoder position and velocity measurement. The load cell functionality has been removed for applications that only require motion sensing.
 

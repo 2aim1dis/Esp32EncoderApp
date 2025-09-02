@@ -41,10 +41,6 @@ constexpr int8_t quadTable[16] = {
   0   // 1111 (11->11)
 };
 
-inline uint32_t micros_fast() {
-  return (uint32_t)esp_timer_get_time();
-}
-
 #if USE_HARDWARE_PCNT
 
 // ====== PCNT IMPLEMENTATION (HIGH PERFORMANCE) ======
@@ -212,8 +208,9 @@ void updateEncoderSpeed(uint32_t currentTime) {
     noInterrupts();
 #if USE_HARDWARE_PCNT
     pos = readPCNTPosition();
-    lastEdgeDelta = edgeDeltaMicros;
-    deltaSign = lastDeltaSign;
+    // For PCNT, we don't have reliable edge timing, so use window-based only
+    lastEdgeDelta = 0;  // Force edge calculation to be disabled
+    deltaSign = 1;
 #else
     pos = positionCounts;
     lastEdgeDelta = edgeDeltaMicros;
@@ -231,13 +228,16 @@ void updateEncoderSpeed(uint32_t currentTime) {
 
     // Calculate signed edge-based speed
     float cpsEdge = 0.0f;
+#if !USE_HARDWARE_PCNT
+    // Only use edge-based calculation when not using PCNT
     if (lastEdgeDelta > 0 && (currentTime - lastEdgeMicros) < VELOCITY_TIMEOUT_US) {
       cpsEdge = (1e6f / (float)lastEdgeDelta) * deltaSign;
     }
+#endif
 
     // Adaptive blending based on velocity magnitude
     float blended;
-#if ADAPTIVE_BLENDING
+#if ADAPTIVE_BLENDING && !USE_HARDWARE_PCNT
     float absWindow = abs(cpsWindow);
     float absEdge = abs(cpsEdge);
     
@@ -253,15 +253,16 @@ void updateEncoderSpeed(uint32_t currentTime) {
                                                   : (cpsWindow != 0 ? cpsWindow : cpsEdge);
     }
 #else
-    // Fixed 50/50 blend
-    blended = (cpsWindow != 0 && cpsEdge != 0) ? (0.5f * cpsWindow + 0.5f * cpsEdge)
-                                                : (cpsWindow != 0 ? cpsWindow : cpsEdge);
+    // When using PCNT, use only window-based calculation
+    blended = cpsWindow;
 #endif
 
-    // Velocity timeout - force to zero if no recent edges
+#if !USE_HARDWARE_PCNT
+    // Velocity timeout - force to zero if no recent edges (ISR mode only)
     if ((currentTime - lastEdgeMicros) > VELOCITY_TIMEOUT_US) {
       blended = 0.0f;
     }
+#endif
 
     // Apply EMA filter
     emaCountsPerSec = EMA_ALPHA * blended + (1.0f - EMA_ALPHA) * emaCountsPerSec;

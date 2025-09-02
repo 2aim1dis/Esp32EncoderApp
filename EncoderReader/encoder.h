@@ -2,11 +2,13 @@
 #define ENCODER_H
 
 #include <Arduino.h>
+#include "esp_timer.h"
 #include "config.h"
 
 #if USE_HARDWARE_PCNT
 #include "driver/pcnt.h"
 #include "soc/gpio_struct.h"
+#include "soc/pcnt_struct.h"
 #endif
 
 // ====== ENCODER STATE ======
@@ -49,6 +51,8 @@ IRAM_ATTR void updateFromAB_Fast();
 IRAM_ATTR void isrZ();
 
 // ====== UTILITY FUNCTIONS ======
-inline uint32_t micros_fast();
+inline uint32_t micros_fast() {
+  return (uint32_t)esp_timer_get_time();
+}
 
 #endif // ENCODER_H
