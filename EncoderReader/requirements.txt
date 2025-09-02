@@ -1,0 +1,15 @@
+# Python requirements for ESP32 Encoder GUI
+# Install with: pip install -r requirements.txt
+
+# Core data handling
+pandas>=1.3.0
+
+# Serial communication
+pyserial>=3.5
+
+# GUI and visualization
+matplotlib>=3.5.0
+tkinter  # Usually included with Python
+
+# Optional: Excel export support
+openpyxl>=3.0.0

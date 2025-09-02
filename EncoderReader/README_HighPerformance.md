@@ -1,18 +1,5 @@
 # High-Performance Encoder Implementation
 
-## Recent Updates
-
-### PCNT Speed Calculation Fix (September 2025)
-**Critical Issue Resolved:** Fixed speed calculation (cps/RPM) showing 0.0 in Hardware PCNT mode.
-- **Problem:** PCNT mode bypassed ISR timing variables needed for speed calculation  
-- **Solution:** Implemented mode-specific velocity calculation logic
-- **Result:** Accurate speed readings now available in both PCNT and ISR modes
-- **Impact:** No breaking changes - all existing configurations continue to work
-
-See `PCNT_SPEED_FIX_UPDATE.md` for detailed technical information.
-
----
-
 ## Overview
 This is an optimized version of the ESP32-S3 quadrature encoder reader, designed for maximum performance and reliability in demanding applications.
 
